@@ -60,7 +60,7 @@ public class SettingController {
 
             File uploadRootDir = new File(uploadRootPath);
 
-            String uploadLocalPath = "D:\\CodeGym\\HTT\\HTT\\src\\main\\webapp\\upload";
+            String uploadLocalPath = System.getProperty("user.dir")  +"src\\main\\webapp\\upload";
 
             File uploadLocalDir = new File(uploadLocalPath);
 

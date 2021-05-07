@@ -61,11 +61,17 @@ public class ProductController {
             List<Product> productTemps = productRepository.findByName(product.getName());
             try{
                 if (productTemps == null || productTemps.isEmpty()) {
+                    if(product.getImage().equals("")){
+                        product.setImage("image-default.png");
+                        productService.saves(product);
+                        attributes.addFlashAttribute("mess", "Thêm mới thành công...!!!");
+                        return "redirect:/product";
+                    }
                     String uploadRootPath = request.getServletContext().getRealPath("upload");
 
                     File uploadRootDir = new File(uploadRootPath);
 
-                    String uploadLocalPath = "D:\\CodeGym\\HTT\\HTT\\src\\main\\webapp\\upload";
+                    String uploadLocalPath = System.getProperty("user.dir")  +"src\\main\\webapp\\upload";
 
                     File uploadLocalDir = new File(uploadLocalPath);
 
@@ -74,12 +80,6 @@ public class ProductController {
                     CommonsMultipartFile[] fileDatas = product.getImageMulti();
 
                     for (CommonsMultipartFile fileData : fileDatas) {
-                        if(product.getImage() == ""){
-                            product.setImage("image-default.png");
-                            productService.saves(product);
-                            attributes.addFlashAttribute("mess", "Thêm mới thành công...!!!");
-                            return "redirect:/product";
-                        }
                         String name = fileData.getOriginalFilename();
                         System.out.println("Client File Name = " + name);
                         if (name != null && name.length() > 0) {
@@ -137,7 +137,7 @@ public class ProductController {
 
             File uploadRootDir = new File(uploadRootPath);
 
-            String uploadLocalPath = "D:\\CodeGym\\HTT\\HTT\\src\\main\\webapp\\upload";
+            String uploadLocalPath = System.getProperty("user.dir")  +"src\\main\\webapp\\upload";
 
             File uploadLocalDir = new File(uploadLocalPath);
 
